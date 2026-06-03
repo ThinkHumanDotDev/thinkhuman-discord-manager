@@ -74,7 +74,7 @@ export async function repositionRole(
   if (!anchor) return;
   // Place just above the anchor (anchor.position + 1)
   await discordRequest(env, "PATCH", `/guilds/${env.GUILD_ID}/roles`, [
-    { id: roleId, position: anchor.position + 1 },
+    { id: roleId, position: anchor.position },
   ]);
 }
 
