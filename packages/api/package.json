@@ -1,0 +1,21 @@
+{
+  "name": "@thinkhuman/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8788",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 migrations apply thinkhuman-discord-tool-db --remote",
+    "db:migrate:local": "wrangler d1 migrations apply thinkhuman-discord-tool-db --local",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.7.11"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260219.0",
+    "typescript": "~5.8.0",
+    "wrangler": "^4"
+  }
+}

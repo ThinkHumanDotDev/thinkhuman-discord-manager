@@ -1,0 +1,19 @@
+{
+  "name": "@thinkhuman/bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8789",
+    "deploy": "wrangler deploy",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "discord-api-types": "^0.37.119"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260219.0",
+    "typescript": "~5.8.0",
+    "wrangler": "^4"
+  }
+}

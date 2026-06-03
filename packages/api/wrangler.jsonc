@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "thinkhuman-discord-tool-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-01-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "thinkhuman-discord-tool-db",
+      "database_id": "c88338c6-1863-49b1-9c6c-8d63375d64da",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "DISCORD_API_BASE": "https://discord.com/api/v10",
+    // Your Discord Guild ID
+    "GUILD_ID": "1474113362395795570",
+    // Comma-separated list of allowed Cloudflare Access team domains
+    "CF_ACCESS_AUD": "your-team-domain:your-access-aud-tag"
+  },
+  "secrets": {
+    "required": ["DISCORD_BOT_TOKEN"]
+  }
+}

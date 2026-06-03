@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "thinkhuman-discord-tool-bot",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-01-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "DISCORD_API_BASE": "https://discord.com/api/v10",
+    "GUILD_ID": "1474113362395795570"
+  },
+  "secrets": {
+    "required": [
+      "DISCORD_PUBLIC_KEY",
+      "DISCORD_BOT_TOKEN",
+      "DISCORD_APPLICATION_ID"
+    ]
+  }
+}
