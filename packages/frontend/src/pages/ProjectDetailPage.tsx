@@ -18,6 +18,7 @@ import {
   updateProject,
   deleteProject,
   refreshInfoEmbed,
+  configureHelpChannel,
   postChangelog,
   updateChangelog,
   type Project,
@@ -275,6 +276,8 @@ export function ProjectDetailPage() {
   const [editingCl, setEditingCl] = useState<Changelog | undefined>();
   const [refreshing, setRefreshing] = useState(false);
   const [refreshMsg, setRefreshMsg] = useState("");
+  const [configuring, setConfiguring] = useState(false);
+  const [configureMsg, setConfigureMsg] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -295,6 +298,21 @@ export function ProjectDetailPage() {
       setRefreshMsg("Error: " + String(err));
     } finally {
       setRefreshing(false);
+    }
+  }
+
+  async function handleConfigureHelp() {
+    if (!project) return;
+    setConfiguring(true);
+    setConfigureMsg("");
+    try {
+      await configureHelpChannel(project.id);
+      setConfigureMsg("Help channel configured.");
+    } catch (err) {
+      setConfigureMsg("Error: " + String(err));
+    } finally {
+      setConfiguring(false);
+      setTimeout(() => setConfigureMsg(""), 4000);
     }
   }
 
@@ -390,7 +408,15 @@ export function ProjectDetailPage() {
             {/* Discord IDs */}
             <Card>
               <CardHeader>
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Discord Resources</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Discord Resources</p>
+                  <Button size="sm" variant="ghost" loading={configuring} onClick={handleConfigureHelp}>
+                    <RefreshCw className="h-3.5 w-3.5" /> Configure Help Channel
+                  </Button>
+                </div>
+                {configureMsg && (
+                  <p className="mt-1 text-xs text-muted-foreground">{configureMsg}</p>
+                )}
               </CardHeader>
               <CardBody className="divide-y divide-border">
                 <DiscordIdRow label="Support Role" id={project.support_role_id} />

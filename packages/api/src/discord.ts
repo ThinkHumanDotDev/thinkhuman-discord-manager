@@ -291,6 +291,33 @@ export async function addOnboardingRole(
   });
 }
 
+export async function configureHelpChannel(
+  env: Env,
+  channelId: string,
+  projectName: string,
+  supportRoleId: string,
+): Promise<void> {
+  const guidelines =
+    `**Welcome To ${projectName} Help!**\n` +
+    `Ask questions, report bugs, and share feature requests for ${projectName}.\n` +
+    `ㅤ\n` +
+    `**How To Get Support**\n` +
+    `To get support just create a post. Feature requests can also be sent here, just create a post like any other and add the \`feature request\` tag.\n\n` +
+    `When you send a message be sure to ping <@&${supportRoleId}>`;
+
+  await discordRequest(env, "PATCH", `/channels/${channelId}`, {
+    topic: guidelines,
+    default_forum_layout: 1, // list view
+    available_tags: [
+      { name: "Help", emoji_name: "❓", moderated: false },
+      { name: "Bug", emoji_name: "🐛", moderated: false },
+      { name: "Feature Request", emoji_name: "💡", moderated: false },
+      { name: "Advice", emoji_name: "🤝", moderated: false },
+      { name: "Solved", emoji_name: "✅", moderated: true },
+    ],
+  });
+}
+
 export async function addDefaultChannel(
   env: Env,
   channelId: string,

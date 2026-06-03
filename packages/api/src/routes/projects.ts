@@ -6,6 +6,7 @@ import {
   createCategory,
   createTextChannel,
   createForumChannel,
+  configureHelpChannel,
   addOnboardingRole,
   addDefaultChannel,
   deleteRole,
@@ -159,7 +160,10 @@ projects.post("/", async (c) => {
     [],
   );
 
-  // 6. Add general role to onboarding question
+  // 6. Configure help forum channel
+  await configureHelpChannel(c.env, helpChannel.id, name, supportRole.id).catch(() => { /* non-fatal */ });
+
+  // 7. Add general role to onboarding question
   if (onboardingQuestionId) {
     await addOnboardingRole(
       c.env,
@@ -170,10 +174,10 @@ projects.post("/", async (c) => {
     ).catch(() => { /* non-fatal */ });
   }
 
-  // 7. Add category to onboarding default channels
+  // 8. Add category to onboarding default channels
   await addDefaultChannel(c.env, category.id).catch(() => { /* non-fatal */ });
 
-  // 8. Save to DB
+  // 9. Save to DB
   const projectLinks = body.links ?? [];
   const stmts: D1PreparedStatement[] = [
     c.env.DB.prepare(
@@ -462,6 +466,20 @@ projects.put("/:id/changelog/:clId", async (c) => {
     .first();
 
   return c.json(updated);
+});
+
+projects.post("/:id/configure-help", async (c) => {
+  const id = c.req.param("id");
+  const project = await c.env.DB.prepare("SELECT * FROM projects WHERE id = ?")
+    .bind(id)
+    .first<{ id: string; name: string; help_channel_id: string; support_role_id: string }>();
+
+  if (!project) return c.json({ error: "Not found" }, 404);
+  if (!project.help_channel_id) return c.json({ error: "No help channel on this project" }, 400);
+
+  await configureHelpChannel(c.env, project.help_channel_id, project.name, project.support_role_id);
+
+  return c.json({ ok: true });
 });
 
 projects.delete("/:id", async (c) => {

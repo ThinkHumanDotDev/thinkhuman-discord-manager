@@ -138,6 +138,11 @@ export const refreshInfoEmbed = (id: string) =>
     method: "POST",
   });
 
+export const configureHelpChannel = (id: string) =>
+  request<{ ok: boolean }>(`/projects/${id}/configure-help`, {
+    method: "POST",
+  });
+
 export const postChangelog = (
   id: string,
   data: { title: string; version?: string; content: string },
