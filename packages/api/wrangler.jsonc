@@ -17,10 +17,8 @@
     "DISCORD_API_BASE": "https://discord.com/api/v10",
     // Your Discord Guild ID
     "GUILD_ID": "1474113362395795570",
-    // Comma-separated list of allowed Cloudflare Access team domains
-    "CF_ACCESS_AUD": "your-team-domain:your-access-aud-tag"
   },
   "secrets": {
-    "required": ["DISCORD_BOT_TOKEN"]
+    "required": ["DISCORD_BOT_TOKEN", "CF_ACCESS_AUD"]
   }
 }
