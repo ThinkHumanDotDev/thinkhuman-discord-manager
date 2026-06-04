@@ -14,7 +14,7 @@ import {
   Alert,
 } from "../components/ui.tsx";
 import { getProjects, createProject, type Project } from "../lib/api.ts";
-import { intToHex, hexToInt } from "../lib/utils.ts";
+import { intToHex, hexToInt, getContrastColor } from "../lib/utils.ts";
 import { Plus, ChevronRight, Loader2 } from "lucide-react";
 
 function CreateProjectModal({
@@ -242,7 +242,7 @@ export function ProjectsPage() {
                 <Badge color={intToHex(p.color)}>
                   <span
                     className="mr-1 inline-block h-1.5 w-1.5 rounded-full"
-                    style={{ backgroundColor: intToHex(p.color) }}
+                    style={{ backgroundColor: getContrastColor(intToHex(p.color)) }}
                   />
                   {intToHex(p.color)}
                 </Badge>

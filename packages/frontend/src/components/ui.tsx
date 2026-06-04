@@ -1,4 +1,4 @@
-import { cn } from "../lib/utils.ts";
+import { cn, getContrastColor } from "../lib/utils.ts";
 import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
@@ -174,7 +174,7 @@ export function Badge({
         color
           ? {
               backgroundColor: color + "18",
-              color,
+              color: getContrastColor(color),
               border: `1px solid ${color}33`,
             }
           : undefined

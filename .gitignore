@@ -7,3 +7,5 @@ dist/
 packages/**/.dev.vars
 bun.lock
 *.tsbuildinfo
+packages/api/src/**/*.js
+packages/bot/src/**/*.js
