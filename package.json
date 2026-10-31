@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
-    "@thinkhuman/biome-config": "github:ThinkHumanDotDev/biome-config#v1.1.0",
+    "@thinkhuman/biome-config": "github:ThinkHumanDotDev/biome-config#v1.2.0",
     "typescript": "~5.8.0"
   }
 }
