@@ -6,7 +6,7 @@
       "name": "thinkhuman-discord-tool",
       "devDependencies": {
         "@biomejs/biome": "2.6.4",
-        "@thinkhuman/biome-config": "github:ThinkHumanDotDev/biome-config#v1.2.0",
+        "@thinkhuman/biome-config": "github:ThinkHumanDotDev/biome-config#v1.3.0",
         "typescript": "~5.8.0",
       },
     },
@@ -353,7 +353,7 @@
 
     "@thinkhuman/api": ["@thinkhuman/api@workspace:packages/api"],
 
-    "@thinkhuman/biome-config": ["@thinkhuman/biome-config@github:ThinkHumanDotDev/biome-config#670a900", { "peerDependencies": { "@biomejs/biome": ">=2.6.4 <3" } }, "ThinkHumanDotDev-biome-config-670a900"],
+    "@thinkhuman/biome-config": ["@thinkhuman/biome-config@github:ThinkHumanDotDev/biome-config#d13351d", { "peerDependencies": { "@biomejs/biome": ">=2.6.4 <3" } }, "ThinkHumanDotDev-biome-config-d13351d"],
 
     "@thinkhuman/bot": ["@thinkhuman/bot@workspace:packages/bot"],
 
