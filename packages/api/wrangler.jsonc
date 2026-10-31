@@ -16,7 +16,7 @@
   "vars": {
     "DISCORD_API_BASE": "https://discord.com/api/v10",
     // Your Discord Guild ID
-    "GUILD_ID": "1474113362395795570",
+    "GUILD_ID": "1474113362395795570"
   },
   "secrets": {
     "required": ["DISCORD_BOT_TOKEN", "CF_ACCESS_AUD"]

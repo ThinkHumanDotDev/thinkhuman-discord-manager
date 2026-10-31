@@ -13,9 +13,13 @@
     "deploy:api": "bun run --cwd packages/api deploy",
     "deploy:bot": "bun run --cwd packages/bot deploy",
     "deploy:frontend": "bun run --cwd packages/frontend deploy",
-    "type-check": "tsc -b packages/api/tsconfig.json packages/bot/tsconfig.json packages/frontend/tsconfig.json"
+    "type-check": "tsc -b packages/api/tsconfig.json packages/bot/tsconfig.json packages/frontend/tsconfig.json",
+    "lint": "biome check",
+    "lint:fix": "biome check --write"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.6.4",
+    "@thinkhuman/biome-config": "github:ThinkHumanDotDev/biome-config#v1.4.0",
     "typescript": "~5.8.0"
   }
 }

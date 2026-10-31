@@ -1,0 +1,24 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
+  "extends": ["@thinkhuman/biome-config/biome"],
+  "overrides": [
+    {
+      // The frontend predates Biome. These findings are real, but each fix changes behaviour (a
+      // button's default type inside a form, React keys, keyboard handling), so they are warnings
+      // until they are fixed on purpose.
+      "includes": ["packages/frontend/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useButtonType": "warn",
+            "noSvgWithoutTitle": "warn",
+            "noStaticElementInteractions": "warn",
+            "useKeyWithClickEvents": "warn",
+            "noLabelWithoutControl": "warn"
+          },
+          "suspicious": { "noArrayIndexKey": "warn" }
+        }
+      }
+    }
+  ]
+}

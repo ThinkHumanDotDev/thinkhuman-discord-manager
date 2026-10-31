@@ -1,26 +1,25 @@
-import { NavLink } from "react-router-dom";
-import { cn } from "../lib/utils.ts";
-import { useEffect, useState, useId } from "react";
-import { useNavigate } from "react-router-dom";
-import type { ReactNode } from "react";
 import {
-  LayoutGrid,
-  Megaphone,
-  Settings,
   Hash,
-  Server,
-  PanelLeftClose,
-  PanelLeft,
+  LayoutGrid,
   type LucideIcon,
-} from "lucide-react";
-import { getGuildInfo, type GuildInfo } from "../lib/api.ts";
+  Megaphone,
+  PanelLeft,
+  PanelLeftClose,
+  Server,
+  Settings,
+} from 'lucide-react'
+import type { ReactNode } from 'react'
+import { useEffect, useId, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { type GuildInfo, getGuildInfo } from '../lib/api.ts'
+import { cn } from '../lib/utils.ts'
 
 // ── Dot pattern ──────────────────────────────────────────────────────────────
 
 function PatternedBackground({ className }: { className?: string }) {
-  const patternId = `pattern-${useId().replace(/:/g, "")}`;
+  const patternId = `pattern-${useId().replace(/:/g, '')}`
   return (
-    <div className={cn("pointer-events-none absolute inset-0 h-full w-full", className)}>
+    <div className={cn('pointer-events-none absolute inset-0 h-full w-full', className)}>
       <svg className="h-full w-full" aria-hidden>
         <pattern
           id={patternId}
@@ -41,7 +40,7 @@ function PatternedBackground({ className }: { className?: string }) {
         <rect x="0" y="0" width="100%" height="100%" fill={`url(#${patternId})`} />
       </svg>
     </div>
-  );
+  )
 }
 
 // ── Kbd hint ─────────────────────────────────────────────────────────────────
@@ -51,30 +50,29 @@ function Kbd({ children }: { children: ReactNode }) {
     <kbd className="pointer-events-none inline-flex h-5 w-fit min-w-5 select-none items-center justify-center rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground uppercase">
       {children}
     </kbd>
-  );
+  )
 }
 
 // ── Nav config ────────────────────────────────────────────────────────────────
 
-const nav: { to: string; label: string; icon: LucideIcon; shortcut: string; exact?: boolean }[] =
-  [
-    { to: "/", label: "Projects", icon: LayoutGrid, shortcut: "p", exact: true },
-    { to: "/server", label: "Server", icon: Server, shortcut: "v" },
-    { to: "/embeds", label: "Post Embed", icon: Megaphone, shortcut: "e" },
-    { to: "/settings", label: "Settings", icon: Settings, shortcut: "s" },
-  ];
+const nav: { to: string; label: string; icon: LucideIcon; shortcut: string; exact?: boolean }[] = [
+  { to: '/', label: 'Projects', icon: LayoutGrid, shortcut: 'p', exact: true },
+  { to: '/server', label: 'Server', icon: Server, shortcut: 'v' },
+  { to: '/embeds', label: 'Post Embed', icon: Megaphone, shortcut: 'e' },
+  { to: '/settings', label: 'Settings', icon: Settings, shortcut: 's' },
+]
 
 function isTypingTarget(t: EventTarget | null) {
-  if (!(t instanceof HTMLElement)) return false;
-  const tag = t.tagName;
-  return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || t.isContentEditable;
+  if (!(t instanceof HTMLElement)) return false
+  const tag = t.tagName
+  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || t.isContentEditable
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
 
 function GuildIcon({ info, size }: { info: GuildInfo; size: number }) {
   if (info.icon) {
-    const url = `https://cdn.discordapp.com/icons/${info.id}/${info.icon}.webp?size=64`;
+    const url = `https://cdn.discordapp.com/icons/${info.id}/${info.icon}.webp?size=64`
     return (
       <img
         src={url}
@@ -84,7 +82,7 @@ function GuildIcon({ info, size }: { info: GuildInfo; size: number }) {
         className="rounded-md object-cover"
         style={{ width: size, height: size }}
       />
-    );
+    )
   }
   return (
     <div
@@ -93,44 +91,46 @@ function GuildIcon({ info, size }: { info: GuildInfo; size: number }) {
     >
       <Hash className="text-white" style={{ width: size * 0.6, height: size * 0.6 }} />
     </div>
-  );
+  )
 }
 
 function Sidebar() {
-  const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
-  const [guildInfo, setGuildInfo] = useState<GuildInfo | null>(null);
+  const navigate = useNavigate()
+  const [collapsed, setCollapsed] = useState(false)
+  const [guildInfo, setGuildInfo] = useState<GuildInfo | null>(null)
 
   useEffect(() => {
-    getGuildInfo().then(setGuildInfo).catch(() => {});
-  }, []);
+    getGuildInfo()
+      .then(setGuildInfo)
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (isTypingTarget(e.target)) return;
-      const item = nav.find(({ shortcut }) => shortcut === e.key.toLowerCase());
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      if (isTypingTarget(e.target)) return
+      const item = nav.find(({ shortcut }) => shortcut === e.key.toLowerCase())
       if (item) {
-        e.preventDefault();
-        navigate(item.to);
+        e.preventDefault()
+        navigate(item.to)
       }
     }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [navigate]);
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [navigate])
 
   return (
     <aside
       className={cn(
-        "flex h-full shrink-0 flex-col bg-sidebar transition-all duration-200",
-        collapsed ? "w-14" : "w-56",
+        'flex h-full shrink-0 flex-col bg-sidebar transition-all duration-200',
+        collapsed ? 'w-14' : 'w-56',
       )}
     >
       {/* Top bar */}
       <div
         className={cn(
-          "flex items-center gap-2 p-2",
-          collapsed ? "justify-center" : "justify-between pb-4",
+          'flex items-center gap-2 p-2',
+          collapsed ? 'justify-center' : 'justify-between pb-4',
         )}
       >
         {!collapsed && (
@@ -143,7 +143,7 @@ function Sidebar() {
               </div>
             )}
             <span className="text-sm font-bold tracking-tight text-sidebar-foreground">
-              {guildInfo?.name ?? "thinkhuman"}
+              {guildInfo?.name ?? 'thinkhuman'}
             </span>
           </div>
         )}
@@ -151,10 +151,10 @@ function Sidebar() {
           type="button"
           onClick={() => setCollapsed((c) => !c)}
           className={cn(
-            "group rounded p-1 text-muted-foreground hover:bg-sidebar-accent transition-colors",
-            collapsed ? "" : "ml-auto",
+            'group rounded p-1 text-muted-foreground hover:bg-sidebar-accent transition-colors',
+            collapsed ? '' : 'ml-auto',
           )}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? (
             <PanelLeft className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
@@ -164,9 +164,7 @@ function Sidebar() {
         </button>
       </div>
 
-      {!collapsed && (
-        <div className="mx-2 mb-1 h-px bg-sidebar-border" />
-      )}
+      {!collapsed && <div className="mx-2 mb-1 h-px bg-sidebar-border" />}
 
       {/* Nav */}
       <nav className="flex flex-1 flex-col gap-0.5 px-2 pt-2">
@@ -178,11 +176,11 @@ function Sidebar() {
             title={collapsed ? `${label} (${shortcut})` : undefined}
             className={({ isActive }) =>
               cn(
-                "group flex items-center gap-2 rounded-md px-2 py-2 text-sm transition-colors",
-                collapsed ? "justify-center" : "w-full",
+                'group flex items-center gap-2 rounded-md px-2 py-2 text-sm transition-colors',
+                collapsed ? 'justify-center' : 'w-full',
                 isActive
-                  ? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-                  : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                  ? 'bg-sidebar-accent font-medium text-sidebar-accent-foreground'
+                  : 'text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
               )
             }
           >
@@ -204,7 +202,7 @@ function Sidebar() {
         </div>
       )}
     </aside>
-  );
+  )
 }
 
 // ── Layout ────────────────────────────────────────────────────────────────────
@@ -217,13 +215,11 @@ export function Layout({ children }: { children: ReactNode }) {
         {/* dot pattern sits behind the floating card */}
         <PatternedBackground />
         <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden rounded-none border-0 bg-background md:rounded-lg md:border md:border-border">
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-            {children}
-          </div>
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</div>
         </div>
       </main>
     </div>
-  );
+  )
 }
 
 // ── Page header ───────────────────────────────────────────────────────────────
@@ -233,19 +229,17 @@ export function PageHeader({
   description,
   action,
 }: {
-  title: string;
-  description?: string;
-  action?: ReactNode;
+  title: string
+  description?: string
+  action?: ReactNode
 }) {
   return (
     <div className="flex shrink-0 items-center justify-between border-b border-border px-6 py-4">
       <div>
         <h1 className="text-base font-semibold text-foreground">{title}</h1>
-        {description && (
-          <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
-        )}
+        {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
       </div>
       {action && <div>{action}</div>}
     </div>
-  );
+  )
 }

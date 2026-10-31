@@ -1,66 +1,66 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { PageHeader } from "../components/Layout.tsx";
+import { ChevronRight, Loader2, Plus } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { PageHeader } from '../components/Layout.tsx'
 import {
+  Alert,
+  Badge,
   Button,
   Card,
   CardBody,
   CardHeader,
-  Modal,
-  Input,
-  Textarea,
   ColorInput,
-  Badge,
-  Alert,
-} from "../components/ui.tsx";
-import { getProjects, createProject, type Project } from "../lib/api.ts";
-import { intToHex, hexToInt, getContrastColor } from "../lib/utils.ts";
-import { Plus, ChevronRight, Loader2 } from "lucide-react";
+  Input,
+  Modal,
+  Textarea,
+} from '../components/ui.tsx'
+import { createProject, getProjects, type Project } from '../lib/api.ts'
+import { getContrastColor, hexToInt, intToHex } from '../lib/utils.ts'
 
 function CreateProjectModal({
   open,
   onClose,
   onCreated,
 }: {
-  open: boolean;
-  onClose: () => void;
-  onCreated: (p: Project) => void;
+  open: boolean
+  onClose: () => void
+  onCreated: (p: Project) => void
 }) {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#000000");
-  const [iconUrl, setIconUrl] = useState("");
-  const [links, setLinks] = useState<Array<{ label: string; url: string }>>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [color, setColor] = useState('#000000')
+  const [iconUrl, setIconUrl] = useState('')
+  const [links, setLinks] = useState<Array<{ label: string; url: string }>>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   function reset() {
-    setName("");
-    setDescription("");
-    setColor("#000000");
-    setIconUrl("");
-    setLinks([]);
-    setError("");
+    setName('')
+    setDescription('')
+    setColor('#000000')
+    setIconUrl('')
+    setLinks([])
+    setError('')
   }
 
   function addLink() {
-    setLinks((l) => [...l, { label: "", url: "" }]);
+    setLinks((l) => [...l, { label: '', url: '' }])
   }
-  function setLink(i: number, field: "label" | "url", value: string) {
-    setLinks((l) => l.map((link, idx) => (idx === i ? { ...link, [field]: value } : link)));
+  function setLink(i: number, field: 'label' | 'url', value: string) {
+    setLinks((l) => l.map((link, idx) => (idx === i ? { ...link, [field]: value } : link)))
   }
   function removeLink(i: number) {
-    setLinks((l) => l.filter((_, idx) => idx !== i));
+    setLinks((l) => l.filter((_, idx) => idx !== i))
   }
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+    e.preventDefault()
     if (!name.trim()) {
-      setError("Name is required.");
-      return;
+      setError('Name is required.')
+      return
     }
-    setLoading(true);
-    setError("");
+    setLoading(true)
+    setError('')
     try {
       const project = await createProject({
         name: name.trim(),
@@ -68,19 +68,27 @@ function CreateProjectModal({
         color: hexToInt(color),
         icon_url: iconUrl,
         links: links.filter((l) => l.label && l.url),
-      });
-      onCreated(project);
-      reset();
-      onClose();
+      })
+      onCreated(project)
+      reset()
+      onClose()
     } catch (err) {
-      setError(String(err));
+      setError(String(err))
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
   return (
-    <Modal open={open} onClose={() => { reset(); onClose(); }} title="New Project" className="max-w-xl">
+    <Modal
+      open={open}
+      onClose={() => {
+        reset()
+        onClose()
+      }}
+      title="New Project"
+      className="max-w-xl"
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <Alert variant="error">{error}</Alert>}
 
@@ -126,13 +134,13 @@ function CreateProjectModal({
             <div key={i} className="flex gap-2">
               <Input
                 value={link.label}
-                onChange={(e) => setLink(i, "label", e.target.value)}
+                onChange={(e) => setLink(i, 'label', e.target.value)}
                 placeholder="Label"
                 className="w-28 shrink-0"
               />
               <Input
                 value={link.url}
-                onChange={(e) => setLink(i, "url", e.target.value)}
+                onChange={(e) => setLink(i, 'url', e.target.value)}
                 placeholder="https://…"
               />
               <button
@@ -147,7 +155,14 @@ function CreateProjectModal({
         </div>
 
         <div className="flex justify-end gap-2 pt-1">
-          <Button type="button" variant="secondary" onClick={() => { reset(); onClose(); }}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => {
+              reset()
+              onClose()
+            }}
+          >
             Cancel
           </Button>
           <Button type="submit" loading={loading}>
@@ -156,22 +171,22 @@ function CreateProjectModal({
         </div>
       </form>
     </Modal>
-  );
+  )
 }
 
 export function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [creating, setCreating] = useState(false);
-  const navigate = useNavigate();
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [creating, setCreating] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     getProjects()
       .then(setProjects)
       .catch((e) => setError(String(e)))
-      .finally(() => setLoading(false));
-  }, []);
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <>
@@ -220,20 +235,24 @@ export function ProjectsPage() {
             >
               <CardHeader className="flex flex-row items-center gap-3">
                 {p.icon_url ? (
-                  <img src={p.icon_url} alt="" className="h-7 w-7 rounded-md object-cover shrink-0" />
+                  <img
+                    src={p.icon_url}
+                    alt=""
+                    className="h-7 w-7 rounded-md object-cover shrink-0"
+                  />
                 ) : (
                   <div
                     className="h-7 w-7 rounded-md shrink-0 border"
                     style={{
-                      backgroundColor: intToHex(p.color) + "18",
-                      borderColor: intToHex(p.color) + "33",
+                      backgroundColor: intToHex(p.color) + '18',
+                      borderColor: intToHex(p.color) + '33',
                     }}
                   />
                 )}
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-foreground">{p.name}</p>
                   <p className="truncate text-xs text-muted-foreground">
-                    {p.description || "No description"}
+                    {p.description || 'No description'}
                   </p>
                 </div>
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
@@ -259,5 +278,5 @@ export function ProjectsPage() {
         onCreated={(p) => setProjects((prev) => [p, ...prev])}
       />
     </>
-  );
+  )
 }

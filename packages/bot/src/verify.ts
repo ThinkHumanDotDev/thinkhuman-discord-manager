@@ -5,24 +5,24 @@ export async function verifySignature(
   body: string,
 ): Promise<boolean> {
   const key = await crypto.subtle.importKey(
-    "raw",
+    'raw',
     hexToBytes(publicKey),
-    { name: "NODE-ED25519", namedCurve: "NODE-ED25519" },
+    { name: 'NODE-ED25519', namedCurve: 'NODE-ED25519' },
     false,
-    ["verify"],
-  );
+    ['verify'],
+  )
   return crypto.subtle.verify(
-    "NODE-ED25519",
+    'NODE-ED25519',
     key,
     hexToBytes(signature),
     new TextEncoder().encode(timestamp + body),
-  );
+  )
 }
 
 function hexToBytes(hex: string): Uint8Array {
-  const bytes = new Uint8Array(hex.length / 2);
+  const bytes = new Uint8Array(hex.length / 2)
   for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16)
   }
-  return bytes;
+  return bytes
 }
