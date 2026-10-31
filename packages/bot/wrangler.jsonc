@@ -10,10 +10,6 @@
     "GUILD_ID": "1474113362395795570"
   },
   "secrets": {
-    "required": [
-      "DISCORD_PUBLIC_KEY",
-      "DISCORD_BOT_TOKEN",
-      "DISCORD_APPLICATION_ID"
-    ]
+    "required": ["DISCORD_PUBLIC_KEY", "DISCORD_BOT_TOKEN", "DISCORD_APPLICATION_ID"]
   }
 }

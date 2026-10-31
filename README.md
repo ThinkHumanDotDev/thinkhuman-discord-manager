@@ -23,3 +23,12 @@ bun run dev:frontend
 ```
 
 The frontend at `http://localhost:5173` proxies `/api` to the local worker at port 8788.
+
+## Lint and format
+
+```bash
+bun run lint      # Biome: format, lint and import order; bun run lint:fix applies the safe fixes
+```
+
+Biome's settings come from the org's shared `@thinkhuman/biome-config` (`biome.jsonc` extends it). CI
+runs it through the org's reusable workflow in `.github/workflows/lint.yml`.

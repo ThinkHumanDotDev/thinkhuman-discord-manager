@@ -1,10 +1,10 @@
-import { Routes, Route } from "react-router-dom";
-import { Layout } from "./components/Layout.tsx";
-import { ProjectsPage } from "./pages/ProjectsPage.tsx";
-import { ProjectDetailPage } from "./pages/ProjectDetailPage.tsx";
-import { EmbedsPage } from "./pages/EmbedsPage.tsx";
-import { SettingsPage } from "./pages/SettingsPage.tsx";
-import { ServerPage } from "./pages/ServerPage.tsx";
+import { Route, Routes } from 'react-router-dom'
+import { Layout } from './components/Layout.tsx'
+import { EmbedsPage } from './pages/EmbedsPage.tsx'
+import { ProjectDetailPage } from './pages/ProjectDetailPage.tsx'
+import { ProjectsPage } from './pages/ProjectsPage.tsx'
+import { ServerPage } from './pages/ServerPage.tsx'
+import { SettingsPage } from './pages/SettingsPage.tsx'
 
 export default function App() {
   return (
@@ -17,5 +17,5 @@ export default function App() {
         <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </Layout>
-  );
+  )
 }
